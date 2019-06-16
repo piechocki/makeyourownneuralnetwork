@@ -1,5 +1,7 @@
 import numpy as np
 import scipy.special
+import os
+from tempfile import TemporaryFile
 
 class neuralNet:
 
@@ -58,3 +60,11 @@ class neuralNet:
         final_ouputs = self.activation_function(final_inputs)
 
         return final_ouputs
+
+    def save_weights(self, path = ""):
+        np.save(os.path.join(path, "w_ih.npy"), self.w_ih)
+        np.save(os.path.join(path, "w_ho.npy"), self.w_ho)
+
+    def load_weights(self, path = ""):
+        self.w_ih = np.load(os.path.join(path, "w_ih.npy"))
+        self.w_ho = np.load(os.path.join(path, "w_ho.npy"))
