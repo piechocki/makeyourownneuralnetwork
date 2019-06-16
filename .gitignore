@@ -8,6 +8,7 @@ __pycache__/
 
 # data and config files
 *.json
+*.csv
 
 # Distribution / packaging
 .Python
