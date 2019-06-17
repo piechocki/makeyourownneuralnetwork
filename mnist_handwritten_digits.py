@@ -46,8 +46,10 @@ class neuralNet:
         hidden_errors = np.dot(self.w_ho.T, output_errors)
 
         # update weights of each weight matrix
-        self.w_ho += self.lr * np.dot((output_errors * final_outputs * (1.0 - final_outputs)), np.transpose(hidden_outputs))
-        self.w_ih += self.lr * np.dot((hidden_errors * hidden_outputs * (1.0 - hidden_outputs)), np.transpose(inputs))
+        self.w_ho += self.lr * np.dot((output_errors * final_outputs *
+            (1.0 - final_outputs)), np.transpose(hidden_outputs))
+        self.w_ih += self.lr * np.dot((hidden_errors * hidden_outputs *
+            (1.0 - hidden_outputs)), np.transpose(inputs))
 
     def query(self, inputs_list):
         # convert input list into a column vector
@@ -66,5 +68,13 @@ class neuralNet:
         np.save(os.path.join(path, "w_ho.npy"), self.w_ho)
 
     def load_weights(self, path = ""):
-        self.w_ih = np.load(os.path.join(path, "w_ih.npy"))
-        self.w_ho = np.load(os.path.join(path, "w_ho.npy"))
+        w_ih = np.load(os.path.join(path, "w_ih.npy"))
+        w_ho = np.load(os.path.join(path, "w_ho.npy"))
+        if w_ih.shape == self.w_ih.shape and \
+           w_ho.shape == self.w_ho.shape:
+            self.w_ih = w_ih
+            self.w_ho = w_ho
+        else:
+            raise ValueError("Dimensions of neuralNet object don't equal to" \
+                " dimensions of loaded weights. Please check the number of" \
+                " nodes in each layer of the created object.")
