@@ -3,7 +3,7 @@ import os, re, imageio, skimage.transform
 import numpy as np
 from PIL import Image
 
-nn = mnist_handwritten_digits.neuralNet(28**2, 250, 10, 0.1)
+nn = mnist_handwritten_digits.neuralNet(28**2, 250, 10)
 nn.load_weights()
 
 scorecard = []
@@ -13,7 +13,8 @@ pngs = [png for png in os.listdir(path_to_png) if re.match(r'.*\.png$', png)]
 
 for png in pngs:
     img_array = imageio.imread(os.path.join(path_to_png, png), as_gray=True)
-    img_square = skimage.transform.resize(img_array,(28,28),anti_aliasing=False)
+    img_square = skimage.transform.resize(img_array, (28, 28),
+                                          anti_aliasing=False)
     # x, y = img_array.shape
     # size = min(x, y)
     # img_square = skimage.transform.resize(img_array,(size,size))
