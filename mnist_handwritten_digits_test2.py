@@ -3,7 +3,7 @@ import os, re, imageio, skimage.transform
 import numpy as np
 from PIL import Image
 
-nn = mnist_handwritten_digits.neuralNet(28**2, 200, 10, 0.1)
+nn = mnist_handwritten_digits.neuralNet(28**2, 250, 10, 0.1)
 nn.load_weights()
 
 scorecard = []
