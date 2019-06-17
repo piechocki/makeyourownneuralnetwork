@@ -1,0 +1,14 @@
+inputnodes:     number of unique input information (e.g. number of pixels of
+                an image)
+hiddennodes:    should be between inputnodes and outputnodes, but duration of
+                calculation rises with a high number of hidden nodes
+outputnodes:    number of possible outputs (number of true unique categories)
+learning_rate:  not to high (overshooting) and not to low (doesn't reach the
+                minimum of error function), but can be lower with a higher
+                number of epochs (iterations) and viceversa
+epochs:         not to high (overfitting) and not to low (doesn't reach the
+                minimum of error function), but can be higher with a lower
+                alpha and viceversa
+scaled_input:   -1 < x < 1
+output:         returns 0 < y < 1 for every x (the exact borders and the
+                distribution of y depends on the chosen sigmoid function)
