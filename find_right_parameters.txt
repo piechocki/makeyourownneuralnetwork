@@ -9,6 +9,10 @@ learning_rate:  not to high (overshooting) and not to low (doesn't reach the
 epochs:         not to high (overfitting) and not to low (doesn't reach the
                 minimum of error function), but can be higher with a lower
                 alpha and viceversa
-scaled_input:   -1 < x < 1
+scaled_input:   -1 < x < 1 (can be different to this range if another
+                activation function is chosen)
 output:         returns 0 < y < 1 for every x (the exact borders and the
-                distribution of y depends on the chosen sigmoid function)
+                distribution of y depends on the chosen activation function)
+weights:        starting values of weight matrices should be filled with
+                random numbers x with -1/sq.root(z) <= x <= 1/sq.root(z)
+                and with z = number of outgoing nodes of this matrix
