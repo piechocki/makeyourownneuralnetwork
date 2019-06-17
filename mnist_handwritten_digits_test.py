@@ -1,5 +1,6 @@
 import mnist_handwritten_digits
 import numpy as np
+import scipy.ndimage
 import os
 
 # - each input graphic has 28x28 pixels that equals the number of nodes in the
@@ -17,11 +18,12 @@ import os
 # can force an 'overshooting' effect, low values slow down the step range of
 # the gradient descent when finding the minimum of the error function (a good
 # alpha can be found by 'trial and error')
-nn = mnist_handwritten_digits.neuralNet(28**2, 200, 10, 0.1)
+nn = mnist_handwritten_digits.neuralNet(28**2, 250, 10, 0.01)
 
 # optional: define a path where data files are located
 path_to_data = ".\\mnist_dataset"
 small = False
+rotate_train_images = True
 filename_training = "mnist_train_100.csv" if small else "mnist_train.csv"
 filename_test = "mnist_test_10.csv" if small else "mnist_test.csv"
 
@@ -50,7 +52,7 @@ for node in range(onodes):
 # the higher the number of epochs is, the lower the learning rate can be set
 # (if we go much more steps within the gradient descent, the range per step
 # can be shorter therefore)
-epochs = 5
+epochs = 10
 for _ in range(epochs):
     for record in data_training:
         training_data = record.split(',')
@@ -58,9 +60,19 @@ for _ in range(epochs):
         #image_array = np.asfarray(training_data[1:]).reshape((28,28))
         scaled_input = nn.scale_input(training_data)
         nn.train(scaled_input, targets[training_data[0]])
-
-# save weights for later use
-nn.save_weights()
+        # optional: train the net with copies of the input images that are
+        # rotated by 10 degrees in both directions
+        if rotate_train_images:
+            # rotation by 10 degrees anticlockwise
+            inputs_plus10_img = scipy.ndimage.interpolation.rotate(
+                scaled_input.reshape(28,28), 10, cval=0.01, reshape=False)
+            # rotation by 10 degrees clockwise
+            inputs_minus10_img = scipy.ndimage.interpolation.rotate(
+                scaled_input.reshape(28,28), -10, cval=0.01, reshape=False)
+            nn.train(inputs_plus10_img.reshape(784),
+                targets[training_data[0]])
+            nn.train(inputs_minus10_img.reshape(784),
+                targets[training_data[0]])
 
 # test the neural net with test set and print the calculated output
 scorecard = []
@@ -72,3 +84,6 @@ for record in data_test:
     scorecard.append(1 if predicted_label == true_label else 0)
 
 print("Accuracy of " + str(sum(scorecard) / len(scorecard)))
+
+# save weights for later use
+nn.save_weights()
