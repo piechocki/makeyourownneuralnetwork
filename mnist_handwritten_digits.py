@@ -13,7 +13,7 @@ class neuralNet:
         self.onodes = outputnodes
         self.lr = learningrate # aka alpha
 
-        # define a class wide sigmoid function, here a logistical fuction
+        # define a class wide sigmoid function, here a logistical function
         # with y=1/(1+e^(-x))
         self.activation_function = lambda x: scipy.special.expit(x)
 
