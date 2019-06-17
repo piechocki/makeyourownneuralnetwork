@@ -18,7 +18,7 @@ import os
 # can force an 'overshooting' effect, low values slow down the step range of
 # the gradient descent when finding the minimum of the error function (a good
 # alpha can be found by 'trial and error')
-nn = mnist_handwritten_digits.neuralNet(28**2, 250, 10, 0.01)
+nn = mnist_handwritten_digits.neuralNet(28**2, 200, 10, 0.01)
 
 # optional: define a path where data files are located
 path_to_data = ".\\mnist_dataset"
